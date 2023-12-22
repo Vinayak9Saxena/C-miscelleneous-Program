@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+
+long int part(long int *a,long int beg,long int end)
+{
+    long int loc = beg;
+    long int flag =1,temp;
+
+    while(flag==1 && beg<end)
+    {
+        while(a[loc]<=a[end] && loc!=end)
+        {
+            end--;
+        }
+
+
+        if(beg == end)
+            flag =0;
+
+        else if(flag ==1)
+        {
+            temp = a[end];
+            a[end] = a[loc];
+            a[loc] = temp;
+
+            loc = end;
+        }
+
+    if(flag ==1)
+    {
+        while(a[loc]>=a[beg] && flag == 1 && loc!=beg)
+        {
+         beg++;
+        }
+        if(beg == end)
+            flag =0;
+        else if(flag == 1)
+        {
+            temp = a[beg];
+            a[beg] =a[loc];
+            a[loc] = temp;
+            loc = beg;
+        }
+    }
+
+
+    }
+
+    return(loc);
+
+}
+
+int quicksort(long int *a, long int beg, long int end,long int n)
+{
+    long int loc,i;
+    static int z=0;
+    if(beg<end)
+    {
+        loc= part(a,beg,end);
+        if(loc == (n/2))
+        {
+            printf("%ld",a[loc]);
+            z=1;
+            return(z);
+        }
+
+
+         quicksort(a,beg,loc-1,n);
+         quicksort(a,loc+1,end,n);
+    }
+return(z);
+}
+
+
+main()
+{
+    long int b[1000001],n,i,x;
+    
+    scanf("%ld",&n);
+       
+    for(i=0;i<n;i++)
+        scanf("%ld",&b[i]);
+
+if(quicksort(b,0,n-1,n) ==0 )
+    printf("%ld",b[n/2]);
+
+
+}
